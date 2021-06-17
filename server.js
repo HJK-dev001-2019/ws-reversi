@@ -15,9 +15,12 @@ const server = http.Server(app);
 const io = socketIO(server);
 
 
-
+console.log("#1");
 
 const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST,{password:REDIS_PASS});
+
+console.log("#2");
+
 
 // 接続
 io.on("connection", (socket) => {
