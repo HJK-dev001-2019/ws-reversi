@@ -36,21 +36,6 @@ if (process.env.REDISTOGO_URL) {
 
 //const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
 
-
-if(process.env.REDISTOGO_URL) {
-    var redisUrl = url.parse(process.env.REDISTOGO_URL);
-    kueOptions.redis = {
-        port: parseInt(redisUrl.port),
-        host: redisUrl.hostname
-    };
-    if(redisUrl.auth) {
-        kueOptions.redis.auth = redisUrl.auth.split(':')[1];
-    }
-}
-//var jobs = kue.createQueue(kueOptions);
-
-redisClient = redis.createClient(kueOptions);
-
 // 接続
 io.on("connection", (socket) => {
     // ルーム参加リクエスト
