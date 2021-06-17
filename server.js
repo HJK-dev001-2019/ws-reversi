@@ -3,6 +3,7 @@ const SERVER_PORT = 8080;
 const REDIS_PORT = 10299;
 const REDIS_HOST = "pike.redistogo.com";
 const PUBLIC_DIR = __dirname + "/public";
+const REDIS_PASS ="0690da325925fab17168a9a4b4f87df4";
 
 const express = require("express");
 const http = require("http");
@@ -16,7 +17,7 @@ const io = socketIO(server);
 
 
 
-const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST,"0690da325925fab17168a9a4b4f87df4");
+const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST,{password:REDIS_PASS});
 
 // 接続
 io.on("connection", (socket) => {
