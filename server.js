@@ -14,20 +14,24 @@ const server = http.Server(app);
 const io = socketIO(server);
 
 
-var db;
-if (process.env.REDISTOGO_URL) {
-   var rtg = require("url").parse(process.env.REDISTOGO_URL);
-// tried this line as well... gave a different error on .connect();
-// db = require('redis-url').connect(process.env.REDISTOGO_URL);
-   db = redis.createClient(rtg.port, rtg.hostname);
-   db.auth(rtg.auth.split(":")[1]);
+var redis = require("redis"),
+    url   = require("url")
 
-   // debug
-   sys.puts('Redis To Go - port: ' + rtg.port + ' hostname: ' + rtg.hostname);
+
+// REDISTOGO_URLをheroku上でしか設定してないことを想定した分岐
+if (process.env.REDISTOGO_URL) {
+    var rtg    = url.parse(process.env.REDISTOGO_URL);
+    var client = redis.createClient(rtg.port, rtg.hostname);
+
+    client.auth(rtg.auth.split(":")[1]);
 } else {
-   db = redis.createClient(config.redis.port, config.redis.host);
-   db.auth(config.redis.password);
+    var client = redis.createClient();
 }
+
+    // redis setver 接続するよ
+    client.on("error", function (err) {
+        console.log("Error " + err);
+    });
 
 
 //const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
