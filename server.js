@@ -15,7 +15,7 @@ const io = socketIO(server);
 
 
 var redis = require("redis"),
-    url   = require("url")
+    url   = require("url");
 
 
 // REDISTOGO_URLをheroku上でしか設定してないことを想定した分岐
