@@ -1,5 +1,5 @@
 "user strict";
-const SERVER_PORT = 80;
+const SERVER_PORT = 8080;
 const REDIS_PORT = 6379;
 const REDIS_HOST = "0.0.0.0";
 const PUBLIC_DIR = __dirname + "/public";
