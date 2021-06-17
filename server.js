@@ -222,9 +222,11 @@ io.on("connection", (socket) => {
     })
 });
 
+console.log("app.use");
+
 app.use("/", express.static(PUBLIC_DIR));
 server.listen(SERVER_PORT);
-
+console.log(SERVER_PORT);
 // 
 function initPieces() {
     return Array.apply(null, Array(8)).map((_, i) => {
