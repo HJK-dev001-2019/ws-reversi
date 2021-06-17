@@ -15,6 +15,9 @@ const io = socketIO(server);
 //const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
 
 var kueOptions = {};
+var kue = require('kue')
+  , url = require('url')
+  , redis = require('kue/node_modules/redis');
 
 if(process.env.REDISTOGO_URL) {
     var redisUrl = url.parse(process.env.REDISTOGO_URL);
