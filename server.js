@@ -1,7 +1,7 @@
 "user strict";
 const SERVER_PORT = 8080;
 const REDIS_PORT = 10299;
-const REDIS_HOST = "0.0.0.0";
+const REDIS_HOST = "pike.redistogo.com";
 const PUBLIC_DIR = __dirname + "/public";
 
 const express = require("express");
