@@ -13,7 +13,16 @@ const app = express();
 const server = http.Server(app);
 const io = socketIO(server);
 const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
-
+if (process.env.REDISTOGO_URL) {
+  var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+  redisClient = redis.createClient(rtg.port, rtg.hostname);
+  subscriber = redis.createClient(rtg.port, rtg.hostname);
+  redisClient.auth(rtg.auth.split(":")[1]);
+  subscriber.auth(rtg.auth.split(":")[1]);
+} else {
+  redisClient = redis.createClient();
+  subscriber = redis.createClient();
+}
 // 接続
 io.on("connection", (socket) => {
     // ルーム参加リクエスト
