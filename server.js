@@ -7,7 +7,7 @@ const PUBLIC_DIR = __dirname + "/public";
 const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
-const redis = require("redis");
+//\const redis = require("redis");
 
 const app = express();
 const server = http.Server(app);
