@@ -12,12 +12,26 @@ const redis = require("redis");
 const app = express();
 const server = http.Server(app);
 const io = socketIO(server);
+
+
+var db;
+if (process.env.REDISTOGO_URL) {
+   var rtg = require("url").parse(process.env.REDISTOGO_URL);
+// tried this line as well... gave a different error on .connect();
+// db = require('redis-url').connect(process.env.REDISTOGO_URL);
+   db = redis.createClient(rtg.port, rtg.hostname);
+   db.auth(rtg.auth.split(":")[1]);
+
+   // debug
+   sys.puts('Redis To Go - port: ' + rtg.port + ' hostname: ' + rtg.hostname);
+} else {
+   db = redis.createClient(config.redis.port, config.redis.host);
+   db.auth(config.redis.password);
+}
+
+
 //const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
 
-var kueOptions = {};
-var kue = require('kue')
-  , url = require('url')
-  , redis = require('kue/node_modules/redis');
 
 if(process.env.REDISTOGO_URL) {
     var redisUrl = url.parse(process.env.REDISTOGO_URL);
