@@ -4,6 +4,7 @@ const REDIS_PORT = 10299;
 const REDIS_HOST = "pike.redistogo.com";
 const PUBLIC_DIR = __dirname + "/public";
 const REDIS_PASS ="0690da325925fab17168a9a4b4f87df4";
+const PORT = process.env.PORT || 5000
 
 const express = require("express");
 const http = require("http");
@@ -225,7 +226,8 @@ io.on("connection", (socket) => {
 console.log("app.use");
 
 app.use("/", express.static(PUBLIC_DIR));
-server.listen(SERVER_PORT);
+//server.listen(SERVER_PORT);
+server.listen(PORT);
 console.log(SERVER_PORT);
 // 
 function initPieces() {
