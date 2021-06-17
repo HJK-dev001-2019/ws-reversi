@@ -7,34 +7,16 @@ const PUBLIC_DIR = __dirname + "/public";
 const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
-//\const redis = require("redis");
+const redis = require("redis");
 
 const app = express();
 const server = http.Server(app);
 const io = socketIO(server);
 
 
-var redis = require("redis"),
-    url   = require("url");
 
 
-// REDISTOGO_URLをheroku上でしか設定してないことを想定した分岐
-if (process.env.REDISTOGO_URL) {
-    var rtg    = url.parse(process.env.REDISTOGO_URL);
-    var client = redis.createClient(rtg.port, rtg.hostname);
-
-    client.auth(rtg.auth.split(":")[1]);
-} else {
-    var client = redis.createClient();
-}
-
-    // redis setver 接続するよ
-    client.on("error", function (err) {
-        console.log("Error " + err);
-    });
-
-
-//const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
+const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST,"0690da325925fab17168a9a4b4f87df4");
 
 // 接続
 io.on("connection", (socket) => {
