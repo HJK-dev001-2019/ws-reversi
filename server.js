@@ -12,7 +12,23 @@ const redis = require("redis");
 const app = express();
 const server = http.Server(app);
 const io = socketIO(server);
-const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
+//const redisClient = redis.createClient(REDIS_PORT, REDIS_HOST);
+
+var kueOptions = {};
+
+if(process.env.REDISTOGO_URL) {
+    var redisUrl = url.parse(process.env.REDISTOGO_URL);
+    kueOptions.redis = {
+        port: parseInt(redisUrl.port),
+        host: redisUrl.hostname
+    };
+    if(redisUrl.auth) {
+        kueOptions.redis.auth = redisUrl.auth.split(':')[1];
+    }
+}
+//var jobs = kue.createQueue(kueOptions);
+
+redisClient = redis.createClient(kueOptions);
 
 // 接続
 io.on("connection", (socket) => {
